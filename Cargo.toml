@@ -1,0 +1,15 @@
+[package]
+name = "hessra-client"
+version = "0.1.0"
+edition = "2024"
+license = "Apache-2.0"
+authors = ["Hessra Team"]
+description = "HTTP client for Hessra authorization services"
+
+[dependencies]
+hessra-token-core = { path = "../hessra-tokens/hessra-token-core" }
+reqwest = { version = "0.12", default-features = false, features = ["rustls-tls-native-roots", "json"] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+thiserror = "2"
+tokio = { version = "1", features = ["sync"] }
