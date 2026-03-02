@@ -282,7 +282,7 @@ impl HessraClientBuilder {
             ClientError::TlsConfig(format!("Failed to parse CA certificate chain: {e}"))
         })?;
 
-        let mut builder = reqwest::ClientBuilder::new().use_rustls_tls();
+        let mut builder = reqwest::ClientBuilder::new();
 
         for cert in certs {
             builder = builder.add_root_certificate(cert);
