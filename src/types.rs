@@ -4,8 +4,6 @@ use serde::{Deserialize, Serialize};
 pub struct TokenRequest {
     pub resource: String,
     pub operation: String,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub namespace: Option<String>,
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
@@ -37,20 +35,6 @@ pub struct PublicKeyResponse {
 pub struct HealthResponse {
     pub status: String,
     pub version: String,
-}
-
-#[derive(Serialize, Deserialize, Debug, Clone)]
-pub struct MintIdentityTokenRequest {
-    pub subject: String,
-    pub duration: Option<u64>,
-}
-
-#[derive(Serialize, Deserialize, Debug, Clone)]
-pub struct MintIdentityTokenResponse {
-    pub response_msg: String,
-    pub token: Option<String>,
-    pub expires_in: Option<u64>,
-    pub identity: Option<String>,
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone)]

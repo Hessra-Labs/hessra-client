@@ -109,7 +109,10 @@ impl HessraClient {
     }
 
     /// Request a capability token (mTLS-authenticated).
-    pub async fn request_token(&self, request: &TokenRequest) -> Result<TokenResponse, ClientError> {
+    pub async fn request_token(
+        &self,
+        request: &TokenRequest,
+    ) -> Result<TokenResponse, ClientError> {
         self.post("request_token", request).await
     }
 
@@ -129,14 +132,6 @@ impl HessraClient {
         request: &VerifyTokenRequest,
     ) -> Result<VerifyTokenResponse, ClientError> {
         self.post("verify_token", request).await
-    }
-
-    /// Mint a namespace-restricted identity token.
-    pub async fn mint_identity_token(
-        &self,
-        request: &MintIdentityTokenRequest,
-    ) -> Result<MintIdentityTokenResponse, ClientError> {
-        self.post("mint_identity_token", request).await
     }
 
     /// Request an identity token (mTLS-authenticated).
@@ -290,12 +285,9 @@ impl HessraClientBuilder {
 
         if let (Some(cert), Some(key)) = (&self.mtls_cert, &self.mtls_key) {
             let identity_pem = format!("{cert}{key}");
-            let identity =
-                reqwest::Identity::from_pem(identity_pem.as_bytes()).map_err(|e| {
-                    ClientError::TlsConfig(format!(
-                        "Failed to create identity from cert and key: {e}"
-                    ))
-                })?;
+            let identity = reqwest::Identity::from_pem(identity_pem.as_bytes()).map_err(|e| {
+                ClientError::TlsConfig(format!("Failed to create identity from cert and key: {e}"))
+            })?;
             builder = builder.identity(identity);
         }
 
